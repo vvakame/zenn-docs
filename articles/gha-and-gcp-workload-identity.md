@@ -6,6 +6,8 @@ topics: ["gcp", "githubactions"]
 published: true
 ---
 
+追記 2021/10/07 OIDCトークン発行元のURLが変更になったようです [ソース](https://github.com/google-github-actions/auth/pull/30)
+
 要約： GitHub ActionsでCI/CD的なことやろうとしたとき、SecretsとかにGCPのService AccountのKeyとか置かなくてもデプロイとかできるようになったらしいのでやったらできた。
 
 ## 経緯
@@ -89,7 +91,7 @@ $ gcloud iam workload-identity-pools providers create-oidc "${PROVIDER_NAME}" \
     --workload-identity-pool="${POOL_NAME}" \
     --display-name="use from GitHub Actions provider" \
     --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository,attribute.actor=assertion.actor,attribute.aud=assertion.aud" \
-    --issuer-uri="https://vstoken.actions.githubusercontent.com" \
+    --issuer-uri="https://token.actions.githubusercontent.com" \
     --allowed-audiences="sigstore"
 
 # Workload IdentityでSAにimpersonateできるようにする
