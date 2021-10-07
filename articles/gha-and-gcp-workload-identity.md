@@ -3,7 +3,7 @@ title: "GitHub Actions + google-github-actions/auth で GCP keyless CI/CD"
 emoji: "😺"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["gcp", "githubactions"]
-published: false
+published: true
 ---
 
 要約： GitHub ActionsでCI/CD的なことやろうとしたとき、SecretsとかにGCPのService AccountのKeyとか置かなくてもデプロイとかできるようになったらしいのでやったらできた。
