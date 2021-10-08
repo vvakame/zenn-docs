@@ -6,6 +6,7 @@ topics: ["gcp", "githubactions"]
 published: true
 ---
 
+追記 2021/10/08 v0.3.1 にすると aud 周りの設定変更が必要 [ソース](https://github.com/google-github-actions/auth/releases/tag/v0.3.1)
 追記 2021/10/07 OIDCトークン発行元のURLが変更になったようです [ソース](https://github.com/google-github-actions/auth/pull/30)
 
 要約： GitHub ActionsでCI/CD的なことやろうとしたとき、SecretsとかにGCPのService AccountのKeyとか置かなくてもデプロイとかできるようになったらしいのでやったらできた。
@@ -91,8 +92,7 @@ $ gcloud iam workload-identity-pools providers create-oidc "${PROVIDER_NAME}" \
     --workload-identity-pool="${POOL_NAME}" \
     --display-name="use from GitHub Actions provider" \
     --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository,attribute.actor=assertion.actor,attribute.aud=assertion.aud" \
-    --issuer-uri="https://token.actions.githubusercontent.com" \
-    --allowed-audiences="sigstore"
+    --issuer-uri="https://token.actions.githubusercontent.com"
 
 # Workload IdentityでSAにimpersonateできるようにする
 # 全GitHubリポジトリのWorkflowからできちゃうとヤバいので可能なリポジトリを絞る
@@ -121,7 +121,7 @@ GitHub Actionsの job の `permissions` に `id-token: write` を追加。
 - id: auth_stg
   if:  ${{ stg環境だと判定する条件 }}
   name: Authenticate to Google Cloud for stg
-  uses: google-github-actions/auth@v0.3.0
+  uses: google-github-actions/auth@v0.3.1
   with:
     create_credentials_file: 'true'
     workload_identity_provider: projects/XXXX/locations/global/workloadIdentityPools/YYYY/providers/ZZZZ
